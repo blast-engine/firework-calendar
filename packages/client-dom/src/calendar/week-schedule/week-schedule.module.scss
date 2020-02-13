@@ -1,0 +1,82 @@
+.container {
+  width:100%;
+  // background: blue;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.schedule-header {
+  display:flex;
+  flex-direction: row;
+  padding-left: 50px;
+}
+
+.schedule-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.content {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.lines {
+  width: 0px;
+}
+
+.line {
+  height: 40px;
+}
+
+.labels {
+  width: 50px;
+}
+
+.label {
+  height: 40px;
+}
+
+.label::before {
+  content: attr(data-text);
+  z-index: 10;
+  color: #dadce0;
+  position: absolute;
+  // left: -50px;
+  width: 45px;
+  text-align: right;
+  margin-top: -12px;
+}
+
+.line::after {
+  content: '';
+  border-bottom: #dadce0 1px solid;
+  position: absolute;
+  width: 100%;
+  margin-top: -1px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.column {
+  border-right: #dadce0 1px solid;
+  width: 60px;
+  flex: 1;
+  position: relative;
+}
+
+.column.last {
+  border-right: none;
+}
+
+.column.header {
+  background-color: #f2f2f2;
+  // margin:30px;
+  padding: 0px 0px 10px 0px;
+  text-align: center;
+  white-space: nowrap;
+  font-weight: 700;
+}

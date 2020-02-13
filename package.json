@@ -1,0 +1,32 @@
+{
+  "name": "@firework-calendar/workspace",
+  "private": true,
+  "version": "0.0.0",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "8.16.0"
+  },
+  "engineStrict": true,
+
+  "scripts": {
+    "d": "yarn dom:start",
+    "build": "yarn dom:build",
+    "test": "yarn build; yarn dom:test",
+    "dom:start": "yarn workspace @firework-calendar/client-dom start",
+    "dom:test": "yarn workspace @firework-calendar/client-dom test",
+    "dom:build": "yarn workspace @firework-calendar/client-dom build"
+  },
+
+  "workspaces": {
+    "packages": ["packages/*"],
+    "nohoist": [
+      "**/app-native",
+      "**/app-native/**"
+    ]
+  },
+
+  "dependencies": {
+    "@blast-engine/interactive-scripts": "0.0.4",
+    "firebase-tools": "7.2.4"
+  }
+}

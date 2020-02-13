@@ -1,0 +1,54 @@
+.day-schedule {
+  background-color: #f2f2f2;
+  position: relative;
+  flex: 1;
+
+  .event {
+    z-index: 10;
+    position: absolute;
+    width: 80%;
+    padding-left: 5px;
+    padding-top: 0px;
+    background: #4A90E2;
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+    border-radius: 4px;
+    transition: width 0.3s, left 0.3s, top 0.1s, background-color 0.2s;
+    overflow: hidden;
+
+    &:hover {
+      background: #51A0FA;
+      box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.2);
+    }
+
+    &.focused {
+      transition: width 0.3s, left 0.3s, background-color 0.2s;
+      background: rgb(129, 188, 255);
+      box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.205);
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .header {
+      display:flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  &.dragging {
+    .event {
+      &:hover {
+        background: #4A90E2;
+        box-shadow: none;
+      }
+      &.focused {
+        background: rgb(129, 188, 255);
+        box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.205);
+      }
+    }
+  }
+}
