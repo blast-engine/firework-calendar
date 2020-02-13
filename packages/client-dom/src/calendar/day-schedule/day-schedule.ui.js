@@ -26,7 +26,7 @@ const PERCENT_EMPTY_SPACE = 10
  *   }
  *   - events: EventList
  */
-export const DaySchedule = memo(({ config, _key, day, events, addNewEvent, updateEvent, deleteEvent }) => {
+export const DaySchedule = memo(({ config, day, events, addNewEvent, updateEvent, deleteEvent }) => {
 
   const [ state, setState ] = useState(INIT_STATE)
   const eventSpaceElement = useRef(null)

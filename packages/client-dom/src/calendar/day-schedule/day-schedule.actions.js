@@ -1,10 +1,12 @@
-import { randString, timeout } from '../../utils'
+import { timeout } from '../../utils'
 import { transitions, getters } from './state'
 
 export const startDraggingExisting =
   ({ performTransition }) =>
   async ({ calEvent, snappedTouchTimestamp, nowTimestamp }) => {
-    await performTransition(transitions.startDraggingExisting, { calEvent, snappedTouchTimestamp, nowTimestamp })
+    await performTransition(transitions.startDraggingExisting, { 
+      calEvent, snappedTouchTimestamp, nowTimestamp 
+    })
   }
 
 export const startDraggingNew =
@@ -31,7 +33,10 @@ export const stopDraggingNewAndOpenCreateModal =
   ({ performTransition, state }) =>
   async () => {
     if (!getters.isDraggingNew(state)) return
-    await performTransition(transitions.stopDraggingNewAndOpenCreateModal)
+    if (!getters.focusedEventHasMinimumLength(state)) 
+      await performTransition(transitions.clearFocusedEvent)
+    else
+      await performTransition(transitions.stopDraggingNewAndOpenCreateModal)
   }  
 
 export const stopDraggingExistingAndSave = 
@@ -69,13 +74,13 @@ export const closeModalAndSave =
   async () => {
     const fewle = getters.focusedEventWithLocalEdits(state)
     if (getters.isNew(state))
-      await kernel.performUpdates([
+      await kernel.performUpdates(
         events.add({ initArgs: {
           name: fewle.name,
           startTimestamp: fewle.startTimestamp,
           endTimestamp: fewle.endTimestamp
         }})
-      ])
+      )
     else {
       const event = events.item(fewle.id)
       await kernel.performUpdates([
@@ -91,11 +96,11 @@ export const closeModalAndSave =
   }
 
 export const closeModalAndDelete = 
-  ({ performTransition, state, deleteEvent }) =>
+  ({ performTransition, state, events }) =>
   async () => {
     const fewle = getters.focusedEventWithLocalEdits(state)
     if (!getters.isNew(state))
-      await deleteEvent({ id: fewle.id })
+      await kernel.performUpdates([ events.remove(fewle.id) ])
     await performTransition(transitions.hideFocusedEvent)
     await performTransition(transitions.closeModal)
     await timeout(300)

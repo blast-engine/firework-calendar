@@ -1,4 +1,5 @@
 import { get } from '../../../utils'
+import { QUARTER_HOUR_MS } from '../schedule-units.const'
 
 export const hasFocusedEvent = state => 
   !!state
@@ -7,6 +8,10 @@ export const focusedEvent = state => {
   if (get(state, 'hidden')) return null
   else return state
 }
+
+export const focusedEventHasMinimumLength = (state) =>
+  get(state, 'startTimestamp') + QUARTER_HOUR_MS <= get(state, 'endTimestamp')
+
 
 export const isNew = state =>
   get(state, 'isNew')
@@ -24,7 +29,7 @@ export const focusedEventWithLocalEdits = state => {
   if (!hasFocusedEvent(state)) return null
   return {
     id: get(state, 'id'),
-    name: get(state, 'name'),
+    name: get(state, 'name') || 'new event',
     startTimestamp: get(state, 'startTimestamp'),
     endTimestamp: get(state, 'endTimestamp')
   }
